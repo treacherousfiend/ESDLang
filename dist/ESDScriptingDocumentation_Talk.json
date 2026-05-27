@@ -7,7 +7,7 @@
       "games_used": ["des", "ds1", "ds1r", "bb", "ds3"],
       "args": [
         {
-          "name": "unk",
+          "name": "debugString",
           "type": "string"
         }
       ]
@@ -187,8 +187,9 @@
       "games_used": ["des", "ds1", "ds1r", "bb", "ds3", "er", "ac6"],
       "args": [
         {
-          "name": "unk",
-          "type": "int"
+          "name": "talkInterruptReason",
+          "type": "enum",
+          "enum": "TalkInterruptReason"
         }
       ]
     },
@@ -299,12 +300,19 @@
       "id": 15,
       "name": "ChangeTeamType",
       "games_used": [],
-      "args": []
+      "args": [
+        {
+          "name": "setHostile",
+          "type": "bool"
+        }
+      ],
+      "comment": "Only changes the team type between 'Friend' and 'HostileFriend'"
     },
     {
       "bank": 1,
       "id": 16,
-      "name": "SetDefaultTeamType",
+      "name": "SetToDefaultTeamType",
+      "deprecated_names": ["SetDefaultTeamType"],
       "games_used": [],
       "args": []
     },
@@ -339,7 +347,7 @@
         {
           "name": "unk",
           "type": "int",
-          "comment": "(usually 2)"
+          "comment": "When 2, set MenuMan index 84's value to 1. When 1, set that value to 0. (usually 2)"
         }
       ]
     },
@@ -354,8 +362,8 @@
       "bank": 1,
       "id": 19,
       "name": "AddTalkListData",
-      "games": ["ds1", "ds1r", "bb", "ds3", "sdt", "er", "ac6", "nr"],
-      "games_used": ["ds1", "ds1r", "bb", "ds3", "sdt", "er", "nr"],
+      "games": ["ds1", "bb", "ds3", "sdt", "er", "ac6", "nr"],
+      "games_used": ["ds1", "bb", "ds3", "sdt", "er", "nr"],
       "args": [
         {
           "name": "slot",
@@ -367,9 +375,32 @@
           "namespace": "Action"
         },
         {
-          "name": "unk",
+          "name": "enableFlag",
           "type": "int",
-          "comment": "use -1"
+          "comment": "-1 is always enabled"
+        }
+      ]
+    },
+    {
+      "bank": 1,
+      "id": 19,
+      "name": "AddTalkListData",
+      "games": ["ds1r"],
+      "games_used": ["ds1r"],
+      "args": [
+        {
+          "name": "slot",
+          "type": "int"
+        },
+        {
+          "name": "textId",
+          "type": "int",
+          "namespace": "Action"
+        },
+        {
+          "name": "enableFlag",
+          "type": "int",
+          "comment": "-1 is always enabled, 69696969 checks event flag 11810000 and if you can join any covenants to enable. blame qloc."
         }
       ]
     },
@@ -405,19 +436,20 @@
       "games_used": ["ac6"],
       "args": [
         {
-          "name": "unk",
+          "name": "movieID",
           "type": "int"
         },
         {
           "name": "unk",
-          "type": "int"
+          "type": "bool"
         }
       ]
     },
     {
       "bank": 1,
       "id": 22,
-      "name": "OpenRegularShop",
+      "name": "ShowShopMenu",
+      "deprecated_names" : ["OpenRegularShop"],
       "games_used": ["des", "ds1", "ds1r", "bb", "ds3", "sdt", "er", "nr"],
       "args": [
         {
@@ -435,14 +467,16 @@
     {
       "bank": 1,
       "id": 23,
-      "name": "OpenRepairShop",
+      "name": "ShowRepairMenu",
+      "deprecated_names" : ["OpenRepairShop"],
       "games_used": ["des", "ds1", "ds1r", "bb", "ds3"],
       "args": []
     },
     {
       "bank": 1,
       "id": 24,
-      "name": "OpenEnhanceShop",
+      "name": "ShowEnhanceMenu",
+      "deprecated_names" : ["OpenEnhanceShop"],
       "games_used": ["des", "ds1", "ds1r", "bb", "ds3", "er", "nr"],
       "args": [
         {
@@ -456,6 +490,7 @@
       "bank": 1,
       "id": 25,
       "name": "OpenHumanityMenu",
+      "games": ["des"],
       "games_used": ["des"],
       "args": [
         {
@@ -467,6 +502,14 @@
           "type": "int"
         }
       ]
+    },
+        {
+      "bank": 1,
+      "id": 25,
+      "name": "OpenHumanityMenu",
+      "games": ["ds1", "ds1r"],
+      "args": [],
+      "comment": "has no args in DS1R, potentially non-functional. TODO: check if this is even present in other games"
     },
     {
       "bank": 1,
@@ -503,7 +546,8 @@
     {
       "bank": 1,
       "id": 28,
-      "name": "OpenMagicEquip",
+      "name": "ShowMagicEquipMenu",
+      "deprecated_names": ["OpenMagicEquip"],
       "games": ["ds1", "ds1r", "bb", "ds3", "sdt", "er", "ac6"],
       "games_used": ["ds1", "ds1r", "bb", "ds3", "sdt", "er"],
       "args": [
@@ -535,14 +579,16 @@
     {
       "bank": 1,
       "id": 30,
-      "name": "OpenRepository",
+      "name": "ShowRepositoryMenu",
+      "deprecated_names": ["OpenRepository"],
       "games_used": ["des", "ds1", "ds1r", "bb", "ds3", "sdt", "er"],
       "args": []
     },
     {
       "bank": 1,
       "id": 31,
-      "name": "OpenSoul",
+      "name": "ShowLevelUpMenu",
+      "deprecated_names": ["OpenSoul"],
       "games_used": ["des", "ds1", "ds1r", "bb", "ds3", "er", "nr"],
       "args": []
     },
@@ -597,7 +643,7 @@
       "games_used": ["bb"],
       "args": [
         {
-          "name": "unk",
+          "name": "maxDuration",
           "type": "float"
         }
       ]
@@ -625,7 +671,6 @@
       "bank": 1,
       "id": 40,
       "name": "OfferHumanity",
-      "games": ["des", "ds1", "ds1r", "bb", "ds3", "sdt", "er", "nr"],
       "games_used": ["ds1", "ds1r", "bb", "ds3", "sdt", "er", "nr"],
       "args": []
     },
@@ -695,7 +740,8 @@
     {
       "bank": 1,
       "id": 43,
-      "name": "EndBonfireKindleAnimLoop",
+      "name": "EndBonfireAnimLoop",
+      "deprecated_names": ["EndBonfireKindleAnimLoop"],
       "games": ["des", "ds1", "ds1r", "bb", "ds3", "sdt"],
       "games_used": ["ds1", "ds1r", "bb", "ds3", "sdt"],
       "args": []
@@ -703,7 +749,8 @@
     {
       "bank": 1,
       "id": 43,
-      "name": "EndBonfireKindleAnimLoop",
+      "name": "EndBonfireAnimLoop",
+      "deprecated_names": ["EndBonfireKindleAnimLoop"],
       "games": ["er", "ac6", "nr"],
       "games_used": ["er", "nr"],
       "args": [
@@ -716,7 +763,8 @@
     {
       "bank": 1,
       "id": 46,
-      "name": "OpenSellShop",
+      "name": "ShowSellShopMenu",
+      "deprecated_names": ["OpenSellShop"],
       "games_used": ["ds1", "ds1r", "bb", "ds3", "sdt", "er"],
       "args": [
         {
@@ -785,7 +833,7 @@
       "args": [
         {
           "name": "unk",
-          "type": "int",
+          "type": "bool",
           "comment": "use 0"
         }
       ]
@@ -797,7 +845,7 @@
       "games_used": ["ds1", "ds1r"],
       "args": [
         {
-          "name": "unk",
+          "name": "motionOffset",
           "type": "int"
         }
       ]
@@ -869,9 +917,8 @@
           "type": "int"
         },
         {
-          "name": "unk",
-          "type": "int",
-          "comment": "use 1"
+          "name": "acquittalCostMultiplier",
+          "type": "float"
         }
       ]
     },
@@ -886,9 +933,8 @@
           "type": "int"
         },
         {
-          "name": "unk",
-          "type": "int",
-          "comment": "use 1"
+          "name": "acquittalCostMultiplier",
+          "type": "float"
         }
       ]
     },
@@ -899,9 +945,9 @@
       "games_used": ["ds1", "ds1r", "bb", "ds3", "sdt", "er", "nr"],
       "args": [
         {
-          "name": "maxValue",
+          "name": "maxShuffleAmount",
           "type": "int",
-          "comment": "valid values from 0-100"
+          "comment": "how many times to shuffle the RNG seed, valid values from 0-255 (TODO: this used to say 0-100, but I see no check for this in DS1R, is that a change?"
         }
       ]
     },
@@ -910,7 +956,8 @@
       "id": 58,
       "name": "SetRNGSeed",
       "games_used": ["ds1", "ds1r", "bb", "ds3", "sdt", "er", "nr"],
-      "args": []
+      "args": [],
+      "comment": "This name seems a bit misleading? Its quite unclear (to me at least) what this actually does. If the max amount of shuffles set in ShuffleRNGSeed has been hit, it basically just calles ShuffleRNGSeed again with that same max."
     },
     {
       "bank": 1,
@@ -929,8 +976,8 @@
           "namespace": "Goods"
         },
         {
-          "name": "newItemQuantity",
-          "type": "int"
+          "name": "doNotRefillToMax",
+          "type": "bool"
         }
       ]
     },
@@ -944,7 +991,8 @@
     {
       "bank": 1,
       "id": 61,
-      "name": "PlayerRespawn",
+      "name": "RevivePlayer",
+      "deprecated_names": ["PlayerRespawn"],
       "games_used": ["ds1", "ds1r", "bb", "ds3"],
       "args": []
     },
@@ -980,7 +1028,13 @@
       "name": "AddIzalithRankingPoints",
       "games": ["des", "ds1", "ds1r", "ds3", "sdt", "er", "ac6"],
       "games_used": ["ds1", "ds1r"],
-      "args": []
+      "args": [
+        {
+          "name": "addedPoints",
+          "type": "int",
+          "comment": "The maximum amount of points a player can have is 60000"
+        }
+      ]
     },
     {
       "bank": 1,
@@ -1091,13 +1145,15 @@
     {
       "bank": 1,
       "id": 71,
+      "name": "SetArenaMode",
       "deprecated_names": ["ReportConversationEndToHavokBehavior"],
       "games": ["ds1r"],
       "games_used": ["ds1r"],
       "args": [
         {
-          "name": "unk",
-          "type": "int"
+          "name": "arenaMode",
+          "type": "enum",
+          "enum": "ArenaMode"
         }
       ]
     },
@@ -1118,7 +1174,15 @@
       "bank": 1,
       "id": 72,
       "deprecated_names": ["SetDungeonIndexNumber"],
-      "games": ["des", "ds1", "ds1r", "ds3", "sdt"],
+      "games": ["ds3", "sdt"],
+      "args": []
+    },
+    {
+      "bank": 1,
+      "id": 72,
+      "name": "SetupCovenantMenu",
+      "deprecated_names": ["SetDungeonIndexNumber"],
+      "games": ["ds1r"],
       "games_used": ["ds1r"],
       "args": []
     },
@@ -1136,10 +1200,30 @@
     },
     {
       "bank": 1,
+      "id": 73,
+      "name": "StartBonfireCovenantAnim",
+      "games": ["ds1r"],
+      "args": []
+    },
+    {
+      "bank": 1,
       "id": 74,
       "name": "OpenBloodGemEquipMenu",
+      "games": ["bb"],
       "games_used": ["bb"],
       "args": []
+    },
+    {
+      "bank": 1,
+      "id": 74,
+      "games": ["ds1r"],
+      "args": [
+        {
+          "name": "unk",
+          "type": "int",
+          "comment": "This value gets put into MenuMan's list of various menu data (offset 0x30) at index 160"
+        }
+      ]
     },
     {
       "bank": 1,
@@ -1162,8 +1246,8 @@
       "bank": 1,
       "id": 76,
       "name": "OpenConversationChoicesMenu",
-      "games": ["des", "ds1", "ds1r", "bb"],
-      "games_used": ["ds1r", "bb"],
+      "games": ["bb"],
+      "games_used": ["bb"],
       "args": []
     },
     {
@@ -1182,9 +1266,28 @@
     },
     {
       "bank": 1,
+      "id": 76,
+      "deprecated_names": ["OpenConversationChoicesMenu"],
+      "games": ["ds1r"],
+      "games_used": ["ds1r"],
+      "args": [],
+      "comment": "Battle of Stoicism related"
+    },
+    {
+      "bank": 1,
       "id": 77,
       "name": "UnusedChaliceAltarPrompt",
-      "games_used": ["ds1r", "bb"],
+      "games": ["bb"],
+      "games_used": ["bb"],
+      "args": []
+    },
+    {
+      "bank": 1,
+      "id": 77,
+      "name": "ResetArenaMode",
+      "deprecated_names": ["UnusedChaliceAltarPrompt"],
+      "games": ["ds1r"],
+      "games_used": ["ds1r"],
       "args": []
     },
     {
@@ -1368,7 +1471,7 @@
       "bank": 1,
       "id": 103,
       "name": "TurnCharacterToFaceEntity",
-      "games": ["des", "ds1", "ds1r", "bb", "ds3", "sdt", "ac6"],
+      "games": ["bb", "ds3", "sdt", "ac6"],
       "games_used": ["ds3", "sdt", "ac6"],
       "args": [
         {
@@ -3655,12 +3758,14 @@
       "games_used": ["ds1r"],
       "args": [
         {
-          "name": "unk",
-          "type": "int"
+          "name": "usePlayer",
+          "type": "bool",
+          "comment": "Use host chr instead of the currently talking NPC"
         },
         {
           "name": "unk",
-          "type": "int"
+          "type": "float",
+          "comment": "probably distance"
         }
       ],
       "return_value": {
@@ -3694,13 +3799,15 @@
         "name": "selfIsDead",
         "type": "bool"
       },
-      "binary_return": true
+      "binary_return": true,
+      "comment": "Specifically checks if this character has less than 1 HP"
     },
     {
       "id": 4,
       "name": "IsPlayerTalkingToMe",
       "games_used": ["des", "ds1", "ds1r", "bb", "ds3"],
-      "args": []
+      "args": [],
+      "binary_return": true
     },
     {
       "id": 5,
@@ -3715,12 +3822,14 @@
     },
     {
       "id": 6,
-      "name": "GetSelfHP",
+      "name": "GetSelfHealthPercentage",
+      "deprecated_names": ["GetSelfHP"],
       "games_used": ["des", "ds1", "ds1r", "bb", "ds3", "sdt", "er", "ac6"],
       "args": [],
       "return_value": {
-        "name": "selfHPValue",
-        "type": "int"
+        "name": "healthPercentage",
+        "type": "float",
+        "comment": "0-100, not 0-1"
       }
     },
     {
@@ -3778,7 +3887,12 @@
       "id": 12,
       "name": "GetTalkInterruptReason",
       "games_used": ["sdt", "er", "nr"],
-      "args": []
+      "args": [],
+      "return_value": {
+          "name": "talkInterruptReason",
+          "type": "enum",
+          "enum": "TalkInterruptReason"
+        }
     },
     {
       "id": 13,
@@ -3928,7 +4042,8 @@
       "id": 24,
       "name": "IsMoviePlaying",
       "games_used": ["ac6"],
-      "args": []
+      "args": [],
+      "binary_return": true
     },
     {
       "id": 25,
@@ -3977,18 +4092,21 @@
         {
           "name": "menu",
           "type": "enum",
-          "enum": "MenuType"
+          "enum": "InteractMenuType",
+          "comment": "Unfortuantely, different from MenuType and can only read a couple menus."
         }
       ],
       "return_value": {
         "name": "didSomething",
         "type": "bool"
       },
-      "binary_return": true
+      "binary_return": true,
+      "comment": "Arguably deprecated by IsMenuOpen, which can read variables from ALL the menus. Although they did apparently update this function for DS3 so who knows"
     },
     {
       "id": 29,
-      "name": "GetStatus",
+      "name": "GetStat",
+      "deprecated_names": ["GetStatus"],
       "games_used": ["des", "ds1", "ds1r", "bb", "ds3", "sdt", "nr"],
       "args": [
         {
@@ -4087,8 +4205,9 @@
       "games_used": ["ds1", "ds1r", "bb", "ds3", "sdt", "er", "nr"],
       "args": [
         {
-          "name": "unk",
-          "type": "int"
+          "name": "bonfireValid",
+          "type": "bool",
+          "comment": "validity seems to be at least partially determined by distance from bonfire."
         }
       ],
       "return_value": {
@@ -4122,8 +4241,19 @@
       "id": 39,
       "name": "CompareParentBonfire",
       "games_used": [],
-      "args": [],
-      "binary_return": true
+      "args": [
+        {
+          "name": "bonfireValid",
+          "type": "bool",
+          "comment": "validity seems to be at least partially determined by distance from bonfire."
+        }
+      ],
+      "return_value": {
+        "name": "comparisonResult",
+        "type": "bool"
+      },
+      "binary_return": true,
+      "comment": "Parent bonfires appear to be bonfires that are lit by default (ex. firelink shrine)"
     },
     {
       "id": 40,
@@ -4184,13 +4314,13 @@
     },
     {
       "id": 46,
-      "name": "RelativeAngleBetweenTwoPlayersWithAxis",
-      "deprecated_names": ["RelativeAngleBetweenTwoPlayers_SpecifyAxis"],
+      "name": "GetRelativeAngleBetweenSelfAndPlayerWithAxis",
+      "deprecated_names": ["RelativeAngleBetweenTwoPlayers_SpecifyAxis", "RelativeAngleBetweenTwoPlayersWithAxis"],
       "games_used": ["ds1", "ds1r", "er"],
       "args": [
         {
-          "name": "unk",
-          "type": "int"
+          "name": "angleInDegrees",
+          "type": "float"
         }
       ]
     },
@@ -4247,9 +4377,8 @@
           "type": "int"
         },
         {
-          "name": "unk",
-          "type": "int",
-          "comment": "use 1"
+          "name": "acquittalCostMultiplier",
+          "type": "float"
         },
         {
           "name": "comparison",
@@ -4317,23 +4446,24 @@
       "id": 54,
       "name": "IsRankingMenuOpen",
       "games_used": ["ds1", "ds1r"],
-      "args": [
-        {
-          "name": "unk",
-          "type": "int"
-        }
-      ]
+      "binary_return": true
     },
     {
       "id": 55,
-      "name": "GetPlayerRemainingHP",
+      "name": "GetPlayerHealthPercentage",
+      "deprecated_names": ["GetPlayerRemainingHP"],
       "games_used": ["ds1", "ds1r", "bb", "er", "ac6"],
-      "args": []
+      "args": [],
+      "return_value": {
+        "name": "healthPercentage",
+        "type": "float",
+        "comment": "0-100, not 0-1"
+      }
     },
     {
       "id": 56,
       "name": "CheckActionButtonArea",
-      "games": ["des", "ds1", "bb", "ds3", "sdt", "er", "ac6", "nr"],
+      "games": ["bb", "ds3", "sdt", "er", "ac6", "nr"],
       "games_used": ["bb", "ds3", "sdt", "er", "ac6", "nr"],
       "args": [
         {
@@ -4350,17 +4480,17 @@
     },
     {
       "id": 56,
+      "name": "IsCovenantMenuSetup",
       "deprecated_names": ["CheckActionButtonArea"],
       "games": ["ds1r"],
       "games_used": ["ds1r"],
       "args": [],
-      "return_value": {
-        "type": "bool"
-      }
+      "binary_return": true
     },
     {
       "id": 57,
       "name": "CheckSpecificPersonTalkHasEnded",
+      "games": ["bb", "ds3", "sdt", "er", "ac6", "nr"],
       "games_used": ["bb", "ds3", "sdt", "er", "ac6", "nr"],
       "args": [
         {
@@ -4376,9 +4506,21 @@
       "binary_return": true
     },
     {
+      "id": 57,
+      "name": "IsPlayerInEventAnim",
+      "games": ["ds1r"],
+      "args": [
+        {
+          "name": "unk",
+          "type": "int"
+        }
+      ],
+      "binary_return": true
+    },
+    {
       "id": 58,
       "name": "CheckSpecificPersonGenericDialogIsOpen",
-      "games": ["des", "ds1", "bb", "ds3", "sdt", "er", "ac6", "nr"],
+      "games": ["bb", "ds3", "sdt", "er", "ac6", "nr"],
       "games_used": ["bb", "ds3", "sdt", "er", "ac6", "nr"],
       "args": [
         {
@@ -4394,18 +4536,16 @@
     },
     {
       "id": 58,
+      "name": "CheckIsOnline",
       "deprecated_names": ["CheckSpecificPersonGenericDialogIsOpen"],
       "games": ["ds1r"],
-      "games_used": ["ds1r"],
       "args": [],
-      "return_value": {
-        "type": "bool"
-      }
+      "binary_return": true
     },
     {
       "id": 59,
       "name": "CheckSpecificPersonMenuIsOpen",
-      "games": ["des", "ds1", "bb", "ds3", "sdt", "er", "ac6", "nr"],
+      "games": ["bb", "ds3", "sdt", "er", "ac6", "nr"],
       "games_used": ["bb", "ds3", "sdt", "er", "ac6", "nr"],
       "args": [
         {
@@ -4441,7 +4581,7 @@
     {
       "id": 60,
       "name": "DoesSelfHaveSpEffect",
-      "games": ["des", "ds1", "bb", "ds3", "sdt", "er", "ac6", "nr"],
+      "games": ["bb", "ds3", "sdt", "er", "ac6", "nr"],
       "games_used": ["bb", "ds3", "sdt", "er", "ac6", "nr"],
       "args": [
         {
@@ -4457,27 +4597,28 @@
     },
     {
       "id": 60,
+      "name": "DidPlayerJustReachCovenantPoint",
       "deprecated_names": ["DoesSelfHaveSpEffect"],
       "games": ["ds1r"],
       "games_used": ["ds1r"],
       "args": [
         {
-          "name": "unk",
-          "type": "int"
+          "name": "stat",
+          "type": "enum",
+          "enum": "PlayerStat"
         },
         {
-          "name": "unk",
+          "name": "points",
           "type": "int"
         }
       ],
-      "return_value": {
-        "type": "bool"
-      }
+      "binary_return": true,
+      "comment": "Checks if you just reached a covenant point threshold"
     },
     {
       "id": 61,
       "name": "DoesPlayerHaveSpEffect",
-      "games": ["des", "ds1", "bb", "ds3", "sdt", "er", "ac6", "nr"],
+      "games": ["bb", "ds3", "sdt", "er", "ac6", "nr"],
       "games_used": ["bb", "sdt", "er", "ac6", "nr"],
       "args": [
         {
@@ -4493,10 +4634,15 @@
     },
     {
       "id": 61,
-      "deprecated_names": ["DoesPlayerHaveSpEffect"],
+      "name": "GetArenaMode",
       "games": ["ds1r"],
       "games_used": ["ds1r"],
-      "args": []
+      "args": [],
+      "return_value": {
+        "name": "arenaMode",
+        "type": "enum",
+        "enum": "ArenaMode"
+      }
     },
     {
       "id": 62,
@@ -4511,6 +4657,7 @@
     {
       "id": 100,
       "name": "GetWorkValue",
+      "games": ["bb", "ds3", "sdt", "er", "ac6", "nr"],
       "games_used": ["ds3", "sdt", "er", "nr"],
       "args": [
         {
@@ -4527,6 +4674,7 @@
     {
       "id": 101,
       "name": "GetEventFlagValue",
+      "games": ["bb", "ds3", "sdt", "er", "ac6", "nr"],
       "games_used": ["ds3", "er"],
       "args": [
         {
@@ -4546,6 +4694,7 @@
     {
       "id": 102,
       "name": "GetCurrentStateElapsedFrames",
+      "games": ["bb", "ds3", "sdt", "er", "ac6", "nr"],
       "games_used": ["ds3", "sdt", "er", "ac6", "nr"],
       "args": [],
       "return_value": {
@@ -4556,6 +4705,7 @@
     {
       "id": 103,
       "name": "GetCurrentStateElapsedTime",
+      "games": ["bb", "ds3", "sdt", "er", "ac6", "nr"],
       "games_used": ["ds3", "sdt", "er", "ac6", "nr"],
       "args": [],
       "return_value": {
@@ -4566,6 +4716,7 @@
     {
       "id": 104,
       "name": "GetPlayerStat",
+      "games": ["bb", "ds3", "sdt", "er", "ac6", "nr"],
       "deprecated_names": ["GetPlayerStatus"],
       "games_used": ["ds3", "sdt", "er", "nr"],
       "args": [
@@ -4583,6 +4734,7 @@
     {
       "id": 105,
       "name": "GetLevelUpSoulCost",
+      "games": ["bb", "ds3", "sdt", "er", "ac6", "nr"],
       "games_used": ["ds3", "nr"],
       "args": [
         {
@@ -4602,6 +4754,7 @@
     {
       "id": 106,
       "name": "GetWhetherChrTurnAnimHasEnded",
+      "games": ["bb", "ds3", "sdt", "er", "ac6", "nr"],
       "games_used": [],
       "args": [],
       "return_value": {
@@ -4612,6 +4765,7 @@
     {
       "id": 107,
       "name": "GetWhetherChrEventAnimHasEnded",
+      "games": ["bb", "ds3", "sdt", "er", "ac6", "nr"],
       "games_used": ["ds3", "sdt", "er", "nr"],
       "args": [
         {
@@ -4628,6 +4782,7 @@
     {
       "id": 108,
       "name": "GetItemHeldNumLimit",
+      "games": ["bb", "ds3", "sdt", "er", "ac6", "nr"],
       "games_used": ["ds3", "sdt"],
       "args": [
         {
@@ -4650,6 +4805,7 @@
     {
       "id": 109,
       "name": "GetEstusAllocation",
+      "games": ["ds3", "sdt", "er", "ac6", "nr"],
       "games_used": ["ds3", "sdt", "er", "nr"],
       "args": [
         {
@@ -4666,6 +4822,7 @@
     {
       "id": 110,
       "name": "GetTotalBonfireLevel",
+      "games": ["bb", "ds3", "sdt", "er", "ac6", "nr"],
       "games_used": ["ds3", "er", "nr"],
       "args": [],
       "return_value": {
@@ -4676,6 +4833,7 @@
     {
       "id": 111,
       "name": "GetIsOnline",
+      "games": ["bb", "ds3", "sdt", "er", "ac6", "nr"],
       "games_used": ["ds3", "er"],
       "args": [],
       "return_value": {
@@ -4687,6 +4845,7 @@
     {
       "id": 112,
       "name": "GetIsNetPenalizedForArena",
+      "games": ["bb", "ds3", "sdt", "er", "ac6", "nr"],
       "games_used": ["ds3"],
       "args": [],
       "return_value": {
@@ -5842,7 +6001,19 @@
     {
       "name": "ChrType",
       "entries": [
-        {"value": 8, "name": "Hollow"}
+        {"value": 0, "name": "Default"},
+        {"value": 1, "name": "WhitePhantom"},
+        {"value": 2, "name": "RedPhantom"},
+        {"value": 3, "name": "Ghost"},
+        {"value": 4, "name": "Ghost2"},
+        {"value": 5, "name": "NPC"},
+        {"value": 7, "name": "Boss"},
+        {"value": 8, "name": "Hollow"},
+        {"value": 9, "name": "HumanNPC"},
+        {"value": 10, "name": "Ghost3"},
+        {"value": 11, "name": "Ghost_LowQuality?"},
+        {"value": 12, "name": "DragonSpirit"},
+        {"value": 13, "name": "ArenaPlayer"}
       ]
     },
     {
@@ -5888,8 +6059,8 @@
       "name": "EnhanceType",
       "games": ["des", "ds1", "ds1r", "bb", "ds3", "sdt"],
       "entries": [
-        {"value": 0, "name": "Normal"},
-        {"value": 10, "name": "Unk"}
+        {"value": 0, "name": "Weapon"},
+        {"value": 10, "name": "Armor"}
       ]
     },
     {
@@ -5940,17 +6111,61 @@
     {
       "name": "MenuType",
       "entries": [
-        {"value": 11, "name": "Talk"},
+        {"value": 2, "name": "Inventory"},
+        {"value": 3, "name": "Equipment"},
+        {"value": 8, "name": "BonfireMenuRelated"},
+        {"value": 9, "name": "ListMenu"},
+        {"value": 11, "name": "Shop"},
         {"value": 12, "name": "Repair"},
-        {"value": 13, "name": "Reinforcement"},
+        {"value": 13, "name": "DialogPopup"},
+        {"value": 16, "name": "TriggerIndict"},
+        {"value": 17, "name": "GenDialog"},
+        {"value": 18, "name": "WriteBloodMsg"},
+        {"value": 19, "name": "Options"},
+        {"value": 20, "name": "FullscreenMenu"},
+        {"value": 21, "name": "Status"},
         {"value": 23, "name": "LevelUp"},
         {"value": 25, "name": "Attunement"},
         {"value": 26, "name": "Storage"},
+        {"value": 27, "name": "OrangeSoapstone"},
+        {"value": 29, "name": "DeleteData"},
         {"value": 30, "name": "CharacterEdit"},
-        {"value": 31, "name": "CovenantOffering"},
+        {"value": 31, "name": "ReadBloodMsg"},
+        {"value": 32, "name": "SosMsg_Tutorial"},
+        {"value": 33, "name": "PlayerAssess"},
         {"value": 36, "name": "Warp"},
+        {"value": 40, "name": "PhantomKick"},
+        {"value": 42, "name": "SystemMenu"},
+        {"value": 47, "name": "RankingDialog"},
+        {"value": 50, "name": "ScreenPreview"},
+        {"value": 51, "name": "RateMsg"},
+        {"value": 52, "name": "Gesture"},
         {"value": 53, "name": "Unk"},
-        {"value": 63, "name": "Bonfire"}
+        {"value": 54, "name": "TextEffectId"},
+        {"value": 55, "name": "CaptionFlag"},
+        {"value": 56, "name": "ActionMsg"},
+        {"value": 57, "name": "BriefingMsg"},
+        {"value": 59, "name": "Brightness"},
+        {"value": 63, "name": "ItemAcquisition"},
+        {"value": 64, "name": "Sell"},
+        {"value": 65, "name": "BloodMsgList"},
+        {"value": 75, "name": "CampMenuIndex"},
+        {"value": 78, "name": "KeyGuideEnabled"},
+        {"value": 79, "name": "KeyGuideMsgId"},
+        {"value": 103, "name": "SelectedInventoryId"},
+        {"value": 104, "name": "DropRetInventoryId"},
+        {"value": 105, "name": "SelectedInventorySlot"},
+        {"value": 106, "name": "InventoryPageState"},
+        {"value": 107, "name": "SelectedSortInventoryId"},
+        {"value": 153, "name": "SosMsgGetResult_Tutorial"},
+        {"value": 170, "name": "MenuBrake"},
+        {"value": 173, "name": "TextEffectDisable"},
+        {"value": 180, "name": "BonfireWarpMenuState"},
+        {"value": 210, "name": "UnkRankingDialogRelated"},
+        {"value": 222, "name": "RepairMenu"},
+        {"value": 223, "name": "EnhanceWeaponMenu"},
+        {"value": 224, "name": "EnhanceArmorMenu"},
+        {"value": 225, "name": "AscendWeaponmenu"}
       ]
     },
     {
@@ -6050,6 +6265,7 @@
         {"value": 4, "name": "Dexterity"},
         {"value": 5, "name": "Intelligence"},
         {"value": 6, "name": "Faith"},
+        {"value": 7, "name": "Luck"},
         {"value": 8, "name": "SoulsCollected"},
         {"value": 9, "name": "TotalGetSouls"},
         {"value": 10, "name": "Humanity"},
@@ -6356,6 +6572,43 @@
         {"value": 6, "name": "Revenant"},
         {"value": 7, "name": "Recluse"},
         {"value": 8, "name": "Executor"}
+      ]
+    },
+    {
+      "name": "TalkInterruptReason",
+      "entries": [
+        {"value": 0, "name": "NothingParticular"},
+        {"value": 1, "name": "ConversationOutOfRange"},
+        {"value": 2, "name": "PlayerWasAttacked"},
+        {"value": 3, "name": "PlayerWasAttackedByEnemy"},
+        {"value": 4, "name": "EnemyWasAttacked"},
+        {"value": 5, "name": "EnemyEnteredSearchRange"},
+        {"value": 6, "name": "ConversationEndButton"}
+      ]
+    },
+    {
+      "name": "InteractMenuType",
+      "entries": [
+        {"value": 2, "name": "WeaponEnhanceMenu"},
+        {"value": 3, "name": "ArmorEnhanceMenu"},
+        {"value": 4, "name": "WeaponAscendMenu"},
+        {"value": 11, "name": "Unk"},
+        {"value": 12, "name": "RepairMenu"},
+        {"value": 23, "name": "LevelUpMenu"},
+        {"value": 25, "name": "AttunementMenu"}
+      ]
+    },
+    {
+      "name": "ArenaMode",
+      "games": ["ds1r"],
+      "entries": [
+        {"value": 0, "name": "RankingMenu"},
+        {"value": 1, "name": "1v1Wide"},
+        {"value": 2, "name": "1v1Narrow"},
+        {"value": 3, "name": "2v2Wide"},
+        {"value": 4, "name": "2v2Narrow"},
+        {"value": 5, "name": "BattleRoyaleWide"},
+        {"value": 6, "name": "BattleRoyaleNarrow"}
       ]
     }
   ],
